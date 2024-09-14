@@ -20,6 +20,7 @@ namespace ProductApps
         Product cProduct;
         private const decimal deliveryCharge = 25.00M;  // Delivery charge constant
         private const decimal wrapCharge = 5.00M;       // Wrap charge constant
+        private const decimal gstRate = 1.10M;          // GST rate @10%
 
         public MainWindow()
         {
@@ -37,13 +38,17 @@ namespace ProductApps
                 cProduct.calTotalPayment();
                 totalPaymentTextBlock.Text = Convert.ToString(cProduct.TotalPayment);
 
-                // Display the total charge (total payment + delivery charge)
+                // Calculate total charge (total payment + delivery charge)
                 decimal totalCharge = cProduct.TotalPayment + deliveryCharge;
                 totalChargeTextBlock.Text = Convert.ToString(totalCharge);
 
-                // Display the total charge after adding wrap charge
+                // Calculate total charge after adding wrap charge
                 decimal totalChargeWithWrap = totalCharge + wrapCharge;
                 totalChargeWithWrapTextBox.Text = Convert.ToString(totalChargeWithWrap);
+
+                // Calculate total charge after adding GST
+                decimal totalChargeWithGST = totalChargeWithWrap * gstRate;
+                totalChargeWithGSTTextBox.Text = Convert.ToString(totalChargeWithGST);
             }
             catch (FormatException)
             {
@@ -59,6 +64,7 @@ namespace ProductApps
             totalPaymentTextBlock.Text = "";
             totalChargeTextBlock.Text = "";  // Clear the total charge text
             totalChargeWithWrapTextBox.Text = "";  // Clear the total charge with wrap text
+            totalChargeWithGSTTextBox.Text = "";   // Clear the total charge with GST text
         }
 
         private void closeButton_Click(object sender, RoutedEventArgs e)
