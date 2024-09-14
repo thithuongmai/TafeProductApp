@@ -19,6 +19,7 @@ namespace ProductApps
     {
         Product cProduct;
         private const decimal deliveryCharge = 25.00M;  // Delivery charge constant
+        private const decimal wrapCharge = 5.00M;       // Wrap charge constant
 
         public MainWindow()
         {
@@ -32,13 +33,17 @@ namespace ProductApps
                 // Create a Product instance using user input
                 cProduct = new Product(Convert.ToDecimal(priceTextBox.Text), Convert.ToInt16(quantityTextBox.Text));
 
-                // Calculate total payment and total charge
+                // Calculate total payment
                 cProduct.calTotalPayment();
                 totalPaymentTextBlock.Text = Convert.ToString(cProduct.TotalPayment);
 
                 // Display the total charge (total payment + delivery charge)
                 decimal totalCharge = cProduct.TotalPayment + deliveryCharge;
                 totalChargeTextBlock.Text = Convert.ToString(totalCharge);
+
+                // Display the total charge after adding wrap charge
+                decimal totalChargeWithWrap = totalCharge + wrapCharge;
+                totalChargeWithWrapTextBox.Text = Convert.ToString(totalChargeWithWrap);
             }
             catch (FormatException)
             {
@@ -52,7 +57,8 @@ namespace ProductApps
             priceTextBox.Text = "";
             quantityTextBox.Text = "";
             totalPaymentTextBlock.Text = "";
-            totalChargeTextBlock.Text = "";  // Clear the total charge text as well
+            totalChargeTextBlock.Text = "";  // Clear the total charge text
+            totalChargeWithWrapTextBox.Text = "";  // Clear the total charge with wrap text
         }
 
         private void closeButton_Click(object sender, RoutedEventArgs e)
